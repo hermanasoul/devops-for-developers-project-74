@@ -9,6 +9,14 @@ services:
       - ./app:/app
     environment:
       - npm_config_cache=/tmp/.npm
+      - DATABASE_HOST=db
+      - DATABASE_NAME=postgres
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
     command: make dev
 
   caddy:
@@ -20,3 +28,17 @@ services:
       - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - app
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
