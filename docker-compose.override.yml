@@ -10,3 +10,13 @@ services:
     environment:
       - npm_config_cache=/tmp/.npm
     command: make dev
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - app
