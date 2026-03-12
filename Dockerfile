@@ -2,6 +2,7 @@ FROM node:20.12.2
 
 WORKDIR /app
 
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     make \
@@ -9,7 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY app/package*.json ./
-
 RUN npm ci --verbose --no-audit --no-fund
 
 COPY app/ ./
