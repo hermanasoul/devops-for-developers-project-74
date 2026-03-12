@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    image: hermanasoul/devops-for-developers-project-74
+    image: devops-for-developers-project-74
     depends_on:
       db:
         condition: service_healthy
