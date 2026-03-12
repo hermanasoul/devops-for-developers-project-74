@@ -1,13 +1,7 @@
-version: '3.8'
-
 services:
   app:
-    image: node:20.12.2
-    working_dir: /app
-    volumes:
-      - ./app:/app
-    ports:
-      - "8080:8080"
-    environment:
-      - npm_config_cache=/tmp/.npm
-    command: make dev
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    image: hermanasoul/devops-for-developers-project-74   # замените на ваш логин
+    command: make test
